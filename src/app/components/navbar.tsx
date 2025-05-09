@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { ChevronDown, Menu, X, Phone } from 'lucide-react';
 
 export default function Navbar() {
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -70,7 +70,7 @@ export default function Navbar() {
                         </div>
                     </Link>
 
-                    {/* Desktop Navigation (ab 1000px) */}
+                    {/* Desktop Navigation */}
                     <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
                         {NavItems.map((item) => (
                             <div 
@@ -117,13 +117,25 @@ export default function Navbar() {
                         ))}
                     </nav>
 
-                    {/* Mobile Menu Button (unter 1000px) */}
-                    <button 
-                        className="lg:hidden p-2 text-gray-600 rounded-lg hover:bg-gray-100"
-                        onClick={toggleMobileMenu}
-                    >
-                        {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                    </button>
+                    {/* Mobile Buttons */}
+                    <div className="flex lg:hidden items-center gap-2">
+                        {/* Phone Button */}
+                        <a
+                            href="tel:0446832165"
+                            className="p-2 text-gray-600 rounded-lg hover:bg-gray-100 transition-colors"
+                            aria-label="Anrufen"
+                        >
+                            <Phone size={24} />
+                        </a>
+                        
+                        {/* Mobile Menu Button */}
+                        <button 
+                            className="p-2 text-gray-600 rounded-lg hover:bg-gray-100 transition-colors"
+                            onClick={toggleMobileMenu}
+                        >
+                            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                        </button>
+                    </div>
 
                     {/* Kontakt Button */}
                     <Link 
@@ -134,7 +146,7 @@ export default function Navbar() {
                     </Link>
                 </div>
 
-                {/* Mobile Menu (unter 1000px) */}
+                {/* Mobile Menu */}
                 {mobileMenuOpen && (
                     <div 
                         ref={mobileMenuRef}
