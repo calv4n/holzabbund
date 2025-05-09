@@ -2,11 +2,13 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Menu, X } from 'lucide-react';
 
 export default function Navbar() {
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const mobileMenuRef = useRef<HTMLDivElement>(null);
 
     const NavItems = [
         { name: 'Startseite', path: '/' },
@@ -29,10 +31,18 @@ export default function Navbar() {
         setActiveDropdown(activeDropdown === itemName ? null : itemName);
     }
 
+    const toggleMobileMenu = () => {
+        setMobileMenuOpen(!mobileMenuOpen);
+        setActiveDropdown(null);
+    };
+
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
                 setActiveDropdown(null);
+            }
+            if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
+                setMobileMenuOpen(false);
             }
         };
 
@@ -109,14 +119,84 @@ export default function Navbar() {
                         ))}
                     </nav>
 
+                    {/* Mobile Menu Button */}
+
+                    <button 
+                        className="md:hidden p-2 text-gray-600 rounded-lg hover:bg-gray-100"
+                        onClick={toggleMobileMenu}
+                    >
+                        {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    </button>
+
                     {/* Kontakt Button - Rechts */}
                     <Link 
                         href="/kontakt" 
-                        className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-xl transition-colors text-lg font-semibold shadow-sm hover:shadow-md"
+                        className="hidden md:block bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 md:px-6 md:py-3 rounded-xl transition-colors text-base md:text-lg font-semibold shadow-sm hover:shadow-md"
                     >
                         Kontakt
                     </Link>
                 </div>
+
+                {/* Mobile Nav Menu */}
+
+                {mobileMenuOpen && (
+                    <div 
+                        ref={mobileMenuRef}
+                        className="md:hidden mt-2 bg-white rounded-xl shadow-lg border border-gray-100 p-4"
+                    >
+                        <div className="space-y-2">
+                            {NavItems.map((item) => (
+                                <div key={item.name} className="relative">
+                                    {item.subItems ? (
+                                        <>
+                                            <button
+                                                onClick={() => toggleDropdown(item.name)}
+                                                className="flex items-center justify-between w-full px-4 py-3 text-gray-700 rounded-lg font-medium hover:bg-gray-50"
+                                            >
+                                                {item.name}
+                                                <ChevronDown 
+                                                    className={`h-4 w-4 transition-transform duration-200 ${activeDropdown === item.name ? 'rotate-180' : ''}`}
+                                                />
+                                            </button>
+                                            {activeDropdown === item.name && (
+                                                <div className="pl-4 mt-1 space-y-1">
+                                                    {item.subItems.map((subItem) => (
+                                                        <Link
+                                                            key={subItem.name}
+                                                            href={subItem.path}
+                                                            className="block px-4 py-2 text-gray-600 rounded-lg hover:bg-gray-50"
+                                                            onClick={() => {
+                                                                setActiveDropdown(null);
+                                                                setMobileMenuOpen(false);
+                                                            }}
+                                                        >
+                                                            {subItem.name}
+                                                        </Link>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </>
+                                    ) : (
+                                        <Link
+                                            href={item.path}
+                                            className="block px-4 py-3 text-gray-700 rounded-lg font-medium hover:bg-gray-50"
+                                            onClick={() => setMobileMenuOpen(false)}
+                                        >
+                                            {item.name}
+                                        </Link>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                        <Link 
+                            href="/kontakt" 
+                            className="block mt-4 w-full text-center bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-xl font-semibold shadow-sm"
+                            onClick={() => setMobileMenuOpen(false)}
+                        >
+                            Kontakt
+                        </Link>
+                    </div>
+                )}
             </div>
         </header>
         </>
