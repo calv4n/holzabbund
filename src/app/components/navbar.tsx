@@ -1,11 +1,12 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronDown } from 'lucide-react';
 
 export default function Navbar() {
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+    const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     const NavItems = [
         { name: 'Startseite', path: '/' },
@@ -23,6 +24,21 @@ export default function Navbar() {
         { name: 'Standort', path: '/standort' },
         { name: 'Kontakt', path: '/kontakt' }
     ];
+
+    const toggleDropdown = (itemName: string) => {
+        setActiveDropdown(activeDropdown === itemName ? null : itemName);
+    }
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setActiveDropdown(null);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     return (
         <>
@@ -51,39 +67,44 @@ export default function Navbar() {
                             <div 
                                 key={item.name} 
                                 className="relative"
-                                onMouseEnter={() => {
-                                    if (item.subItems) {
-                                        setHoveredItem(item.name);
-                                        setIsDropdownOpen(true);
-                                    }
-                                }}
-                                onMouseLeave={() => {
-                                    if (item.subItems) {
-                                        setIsDropdownOpen(false);
-                                    }
-                                }}
+                                ref={item.subItems ? dropdownRef : null}
                             >
-                                <Link
-                                    href={item.path}
-                                    className="px-3 py-2 text-gray-600 hover:text-gray-900 rounded-xl transition-colors font-medium text-lg hover:bg-gray-100/50"
-                                >
-                                    {item.name}
-                                </Link>
-
                                 {/* Dropdown für Über uns */}
-                                {item.subItems && hoveredItem === item.name && isDropdownOpen && (
-                                    <div className="absolute left-1/2 -translate-x-1/2 mt-2 min-w-[220px] bg-white rounded-xl shadow-lg py-2 z-50 border border-gray-100">
-                                        {item.subItems.map((subItem) => (
-                                            <Link
-                                                key={subItem.name}
-                                                href={subItem.path}
-                                                className="block px-6 py-2 text-gray-700 hover:bg-gray-50 hover:text-gray-900 text-base"
-                                            >
-                                                {subItem.name}
-                                            </Link>
-                                        ))}
-                                    </div>
-                                )}
+                                {item.subItems ? (
+                                    <>
+                                        <button
+                                            onClick={() => toggleDropdown(item.name)}
+                                            className='flex items-center px-3 py-2 text-gray-600 hover:text-gray-900 rounded-xl transition-colors font-medium text-lg hover:bg-gray-100/50'
+                                        >
+                                            {item.name}
+                                            <ChevronDown
+                                                className={`ml-1 h-5 w-5 transition-transform duration-200 ${activeDropdown === item.name ? 'rotate-180' : ''}`}
+                                            />
+                                        </button>
+
+                                        {activeDropdown === item.name && (
+                                            <div className="absolute left-1/2 -translate-x-1/2 mt-2 min-w-[220px] bg-white rounded-xl shadow-lg py-2 z-50 border border-gray-100">
+                                                {item.subItems.map((subItem) => (
+                                                    <Link
+                                                        key={subItem.name}
+                                                        href={subItem.path}
+                                                        className="block px-6 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 text-lg"
+                                                        onClick={() => setActiveDropdown(null)}
+                                                    >
+                                                        {subItem.name}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </>
+                                ) : (
+                                    <Link
+                                        href={item.path}
+                                        className="px-3 py-2 text-gray-600 hover:text-gray-900 rounded-xl transition-colors font-medium text-lg hover:bg-gray-100/50"
+                                    >
+                                        {item.name}
+                                    </Link>
+                                )}                                
                             </div>
                         ))}
                     </nav>
