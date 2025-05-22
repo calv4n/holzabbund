@@ -3,7 +3,7 @@ import Image from "next/image"
 export default function Footer() {
 
     return (
-        <footer className="footer sm:footer-horizontal bg-white/95 text-gray-600 p-10 ">
+        <footer className="footer absolute sm:footer-horizontal bg-white/95 text-gray-600 p-10 bottom-0 ">
             <aside className="w-50">
                 <Image
                     src="/img/logo.png"
@@ -13,7 +13,7 @@ export default function Footer() {
                     className="object-contain"
                 />
                 <p>
-                    Holzabbund Wädenswil AG
+                    <span className="font-bold">Holzabbund Wädenswil AG</span>
                     <br />
                     Abbundwerk seit 1987
                 </p>
