@@ -140,7 +140,7 @@ export default function Navbar() {
                     {/* Kontakt Button */}
                     <Link 
                         href="/kontakt" 
-                        className="hidden lg:block bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 lg:px-6 lg:py-3 rounded-xl transition-colors text-sm lg:text-base font-semibold shadow-sm hover:shadow-md"
+                        className="hidden lg:block bg-[#b43300] hover:bg-[#992a00] text-white px-4 py-2 lg:px-6 lg:py-3 rounded-xl transition-colors text-sm lg:text-base font-semibold shadow-sm hover:shadow-md"
                     >
                         Kontakt
                     </Link>
