@@ -62,7 +62,7 @@ export default function CustomCarousel() {
     };
 
     return (
-        <div className="relative w-full max-w-screen-xl mx-auto overflow-hidden shadow-2xl bg-white">
+        <div className="relative w-full max-w-screen-xl mx-auto overflow-hidden shadow-2xl bg-white rounded-xl">
             <div className="w-full h-[500px] relative">
                 {images.map((img, index) => (
                     <div
