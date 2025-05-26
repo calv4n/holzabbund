@@ -1,4 +1,5 @@
 "use client";
+import CustomCarousel from "@/app/components/customcarousel";
 
 const overTitle = "Abbundwerk in Wädenswil";
 const title = "Abbundarbeiten nach Mass";
@@ -9,9 +10,10 @@ export default function Startseite() {
     <div className="flex flex-col items-center text-xl">
       <p>{overTitle}</p>
       <h1 className="font-extrabold text-5xl mt-3">{title}</h1>
-      <p className="font-thin text-center text-2xl max-w-[800px] mt-5 text-gray-800">{titleDescription}</p>
-
-
+      <p className="font-thin text-center text-2xl max-w-[800px] mt-5 text-gray-800">{titleDescription}</p> 
+      <div className="mt-10 w-full">
+        <CustomCarousel />
+      </div>
     </div>
   );
 }
