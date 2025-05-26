@@ -3,7 +3,7 @@ import Image from "next/image"
 export default function Footer() {
 
     return (
-        <footer className="footer absolute sm:footer-horizontal bg-white/95 text-gray-600 p-10 bottom-0 ">
+        <footer className="footer sm:footer-horizontal bg-white/95 text-gray-600 p-10">
             <aside className="w-50">
                 <Image
                     src="/img/logo.png"
