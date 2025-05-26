@@ -36,16 +36,17 @@ body {
 /* Shiny Text ReactBits */
 
 .shiny-text {
-  color: #b5b5b5a4; /* Adjust this color to change intensity/style */
   background: linear-gradient(
     120deg,
-    rgba(255, 255, 255, 0) 40%,
-    rgba(255, 255, 255, 0.8) 50%,
-    rgba(255, 255, 255, 0) 60%
+    rgba(180, 51, 0, 1) 35%,
+    rgb(209, 117, 84) 50%, 
+    rgba(180, 51, 0, 1) 65%
   );
   background-size: 200% 100%;
+  background-clip: text;
   -webkit-background-clip: text;
   background-clip: text;
+  color: transparent;
   display: inline-block;
   animation: shine 5s linear infinite;
 }

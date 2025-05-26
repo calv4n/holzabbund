@@ -26,7 +26,7 @@ export default function Startseite() {
           <ShinyText
             text="Kontakt"
             disabled={false}
-            speed={2}
+            speed={4}
             className="font-bold text-[#b43300] hover:text-[#992a00] transition-colors duration-300"
           />
         </Link>{" "}
