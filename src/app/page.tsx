@@ -1,6 +1,4 @@
 "use client";
-import BootstrapCarousel from "./components/BootstrapCarousel";
-
 
 const overTitle = "Abbundwerk in Wädenswil";
 const title = "Abbundarbeiten nach Mass";
@@ -13,9 +11,7 @@ export default function Startseite() {
       <h1 className="font-extrabold text-5xl mt-3">{title}</h1>
       <p className="font-thin text-center text-2xl max-w-[800px] mt-5 text-gray-800">{titleDescription}</p>
 
-      {/* Slideshow */}
-      
-      <BootstrapCarousel />
+
     </div>
   );
 }
