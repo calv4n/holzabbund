@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -11,23 +11,46 @@ const images = [
 
 export default function CustomCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isManual, setIsManual] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const lastIndex = images.length - 1;
 
   const goTo = (index: number) => {
     setActiveIndex(index);
+    setIsManual(true);
   };
 
   const prev = () => {
-    setActiveIndex(activeIndex === 0 ? lastIndex : activeIndex - 1);
+    setActiveIndex((prevIndex) =>
+      prevIndex === 0 ? lastIndex : prevIndex - 1
+    );
+    setIsManual(true);
   };
 
   const next = () => {
-    setActiveIndex(activeIndex === lastIndex ? 0 : activeIndex + 1);
+    setActiveIndex((prevIndex) =>
+      prevIndex === lastIndex ? 0 : prevIndex + 1
+    );
+    setIsManual(true);
   };
+
+  // Auto-Slide nur wenn isManual === false
+  useEffect(() => {
+    if (!isManual) {
+      intervalRef.current = setInterval(() => {
+        setActiveIndex((prevIndex) =>
+          prevIndex === lastIndex ? 0 : prevIndex + 1
+        );
+      }, 5000);
+    }
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [isManual, lastIndex]);
 
   return (
     <div className="relative w-full max-w-screen-xl mx-auto overflow-hidden rounded-xl">
-      {/* Image Container */}
       <div className="w-full h-[500px] relative">
         {images.map((img, index) => (
           <div
@@ -46,7 +69,6 @@ export default function CustomCarousel() {
           </div>
         ))}
 
-        {/* Left/Right Arrows */}
         <button
           onClick={prev}
           className="absolute top-1/2 left-4 -translate-y-1/2 z-50 bg-white/80 hover:bg-white p-2 rounded-full shadow transition"
@@ -63,7 +85,6 @@ export default function CustomCarousel() {
         </button>
       </div>
 
-      {/* Dots */}
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-50">
         {images.map((_, i) => (
           <span
