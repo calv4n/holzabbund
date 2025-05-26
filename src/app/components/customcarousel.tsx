@@ -12,32 +12,33 @@ const images = [
 export default function CustomCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isManual, setIsManual] = useState(false);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const autoSlideRef = useRef<NodeJS.Timeout | null>(null);
+  const resetTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const lastIndex = images.length - 1;
 
   const goTo = (index: number) => {
     setActiveIndex(index);
-    setIsManual(true);
+    pauseAutoSlide();
   };
 
   const prev = () => {
     setActiveIndex((prevIndex) =>
       prevIndex === 0 ? lastIndex : prevIndex - 1
     );
-    setIsManual(true);
+    pauseAutoSlide();
   };
 
   const next = () => {
     setActiveIndex((prevIndex) =>
       prevIndex === lastIndex ? 0 : prevIndex + 1
     );
-    setIsManual(true);
+    pauseAutoSlide();
   };
 
-  // Auto-Slide nur wenn isManual === false
+  // Automatischer Slide (läuft nur, wenn isManual === false)
   useEffect(() => {
     if (!isManual) {
-      intervalRef.current = setInterval(() => {
+      autoSlideRef.current = setInterval(() => {
         setActiveIndex((prevIndex) =>
           prevIndex === lastIndex ? 0 : prevIndex + 1
         );
@@ -45,9 +46,20 @@ export default function CustomCarousel() {
     }
 
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (autoSlideRef.current) clearInterval(autoSlideRef.current);
     };
   }, [isManual, lastIndex]);
+
+  // Funktion um AutoSlide zu pausieren + später wieder zu starten
+  const pauseAutoSlide = () => {
+    setIsManual(true);
+    if (autoSlideRef.current) clearInterval(autoSlideRef.current);
+    if (resetTimeoutRef.current) clearTimeout(resetTimeoutRef.current);
+
+    resetTimeoutRef.current = setTimeout(() => {
+      setIsManual(false);
+    }, 10000); // 10 Sekunden
+  };
 
   return (
     <div className="relative w-full max-w-screen-xl mx-auto overflow-hidden rounded-xl">
@@ -68,7 +80,6 @@ export default function CustomCarousel() {
             />
           </div>
         ))}
-
         <button
           onClick={prev}
           className="absolute top-1/2 left-4 -translate-y-1/2 z-50 bg-white/80 hover:bg-white p-2 rounded-full shadow transition"
