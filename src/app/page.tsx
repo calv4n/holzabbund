@@ -42,6 +42,24 @@ export default function Startseite() {
       <div className="mt-10 w-full">
         <CustomCarousel />
       </div>
+
+      {/* Opening Hours Section */}
+      <div className="mt-16 bg-white p-8 rounded-2xl shadow-lg border border-gray-100 w-full max-w-2xl mx-auto text-center">
+        <h3 className="text-2xl font-bold text-[#b43300] mb-4">Öffnungszeiten</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
+          <div className="flex flex-col items-center sm:items-end pr-0 sm:pr-4 border-b sm:border-b-0 sm:border-r border-gray-100 pb-4 sm:pb-0">
+            <span className="font-semibold">Montag - Donnerstag</span>
+            <span>07:30 - 12:00</span>
+            <span>13:00 - 17:00</span>
+          </div>
+          <div className="flex flex-col items-center sm:items-start pl-0 sm:pl-4">
+            <span className="font-semibold">Freitag</span>
+            <span>07:30 - 12:00</span>
+            <span>13:00 - 15:00</span>
+          </div>
+        </div>
+      </div>
+
       <SplitText
         text={animatedSentence}
         className="mt-15 text-2xl font-bold text-gray-800"

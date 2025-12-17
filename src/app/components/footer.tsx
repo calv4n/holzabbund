@@ -8,10 +8,10 @@ const footerData = {
   },
   columns: [
     {
-      heading: "Holzabbund Wädenswil AG",
+      heading: "Firma",
       links: [
         { label: "Startseite", href: "/" },
-        { label: "Über uns", href: "/team" },
+        { label: "Über uns", href: "/ueber-uns" },
         { label: "Offene Stellen", href: "/offene-stellen" },
         { label: "Datenschutz", href: "/datenschutz" },
         { label: "Impressum", href: "/impressum" },
@@ -19,23 +19,24 @@ const footerData = {
       ],
     },
     {
-      heading: "Holzabbund Angebot",
+      heading: "Angebot",
       links: [
-        { label: "Produkte", href: "/produkte" },
+        { label: "Produkte", href: "/verkauf" },
         { label: "Planung", href: "/planung" },
-        { label: "Dienstleistungen", href: "/dienstleistungen" },
+        { label: "Dienstleistungen", href: "/abbundarbeiten" },
         { label: "Lieferanten", href: "/lieferanten" },
         { label: "Standort", href: "/standort" },
       ],
     },
     {
-      heading: "Anschrift & Kontakt",
+      heading: "Adresse",
       links: [
-        { label: "Holzabbund Wädenswil AG", href: "#" },
-        { label: "Aamühle 9", href: "#" },
-        { label: "8820 Wädenswil", href: "#" },
+        { label: "Holzabbund Wädenswil AG", href: "/standort" },
+        { label: "Aamühle 9", href: "/standort" },
+        { label: "8820 Wädenswil", href: "/standort" },
         { label: "Tel. 044 683 21 65", href: "tel:0446832165" },
-        { label: "Fax 044 683 21 69", href: "#" },
+        { label: "Fax 044 683 21 69", href: "tel:0446832169" },
+        { label: "info@holzabbund.ch", href: "mailto:info@holzabbund.ch" },
       ],
     },
   ],

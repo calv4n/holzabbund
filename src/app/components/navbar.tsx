@@ -17,7 +17,7 @@ export default function Navbar() {
         { name: 'Planung', path: '/planung' },
         {
             name: 'Über uns',
-            path: '/team',
+            path: '/ueber-uns',
             subItems: [
                 { name: 'Lieferanten', path: '/lieferanten' },
                 { name: 'Offene Stellen', path: '/offene-stellen' }
